@@ -27,7 +27,7 @@
       socket.on('connect', () => {
         console.log(socket.id)
         let img = document.getElementById("qrCode");
-        img.src=`https://api.qrserver.com/v1/create-qr-code/?data=${socket.id}&amp;size=100x100`
+        img.src=`https://api.qrserver.com/v1/create-qr-code/?data=https://limitless-dawn-38943.herokuapp.com/${socket.id}&amp;size=100x100`
       })
     </script>
   </body>
