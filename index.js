@@ -3,6 +3,12 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const config = require('./utils/config')
 
+app.get("/image/:id", async (req, res) => {
+  const socketId = req.params.id
+  io.to(socketId).emit('news', 'Hello!')
+  res.send("Sent!")
+})
+
 app.get('/', (_req, res) => {
   res.sendFile(__dirname + "/index.html")
 })
