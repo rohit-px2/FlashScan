@@ -3,19 +3,20 @@ const app = express()
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const config = require('./utils/config')
-const multer = require('multer')
 
-app.use(express.json())
-
+app.use(express.json({limit: '1000mb'}))
+app.use(express.urlencoded({extended:true, limit: '1000mb'}))
 app.post("/image/:id", async (req, res) => {
-  console.log(req)
   const body = req.body
-  console.log(body)
   const socketId = req.params.id
   io.to(socketId).emit('news', req.body.data)
   res.status(200).send({
     "status": "sent"
   })
+})
+
+app.get("/scripts/filesaver.js", (_req, res) => {
+  res.sendFile(__dirname + "/node_modules/file-saver/dist/FileSaver.js")
 })
 
 app.get("/image/:id", async (req, res) => {
@@ -24,7 +25,7 @@ app.get("/image/:id", async (req, res) => {
   res.send("Sent!")
 })
 
-app.get("/:id", async (req, res) => {
+app.get("/:id", async (_req, res) => {
   res.sendFile(__dirname + "/upload.html")
 })
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>FlashScan</title>
     <style>
       body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
 
@@ -23,14 +23,21 @@
     </form>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      var socket = io();
+      let counter = 0
+      let socket = io();
       socket.on('connect', () => {
         console.log(socket.id)
         let img = document.getElementById("qrCode");
         img.src=`https://api.qrserver.com/v1/create-qr-code/?data=https://limitless-dawn-38943.herokuapp.com/${socket.id}&amp;size=100x100`
       })
-      socket.on('news', (imgs) => {
-        console.log(imgs)
+      socket.on('news', (img) => {
+        fetch(img).then(res => res.blob()).then(blob => {
+          let link = document.createElement('a')
+          link.href = URL.createObjectURL(blob)
+          const extension = img.substring("data:image/".length, img.indexOf(";base64"))
+          link.download = `${counter++}.${extension}`
+          link.click()
+        })
       })
     </script>
   </body>
