@@ -2,6 +2,7 @@
   <head>
     <title>Upload</title>
   </head>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <body>
     <form id="uploadForm">
       <input id="files" type="file" accept="image/x-png,image/jpeg" multiple>
@@ -9,10 +10,19 @@
       <button type="submit">Submit</button>
     </form>
     <script>
-      import axios from 'axios';
       let f = document.getElementById("uploadForm")
-      f.addEventListener("submit", (event) => {
-        event.preventDefault();
+      f.addEventListener("submit", async event => {
+        event.preventDefault()
+        var input = document.getElementById("files")
+        const id = window.location.href.split("/")[3]
+        const url = `/image/${id}`
+        const data = {
+          data: input.files
+        }
+        await axios.post(url, {
+          data: input.files
+        }).then(response => console.log(response))
+        .catch(err => console.err(err))
       })
     </script>
   </body>

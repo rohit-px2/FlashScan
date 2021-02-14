@@ -3,6 +3,17 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const config = require('./utils/config')
 
+app.post("/image/:id", async (req, res) => {
+  console.log(req)
+  const body = req.body
+  console.log(body)
+  const socketId = req.params.id
+  io.to(socketId).emit('news', req.body.data)
+  res.status(200).send({
+    "status": "sent"
+  })
+})
+
 app.get("/image/:id", async (req, res) => {
   const socketId = req.params.id
   io.to(socketId).emit('news', 'Hello!')
