@@ -1151,7 +1151,7 @@ text-align: justify; }
     border: 2px solid #E1E1E1;
     height: 65px;
     padding: 0 30px;
-    border-radius: 5px;
+    border-radius: 10px;
     width: 100%;
     color: #2E2E2E; }
     .subscribe-form input::placeholder {
@@ -1177,24 +1177,21 @@ text-align: justify; }
     border-bottom-right-radius: 5px;
     height: 65px;
     line-height: 65px;
-    background: -webkit-linear-gradient(left, #fe8464 0%, #fe6e9a 50%, #fe8464 100%);
-    background: -o-linear-gradient(left, #fe8464 0%, #fe6e9a 50%, #fe8464 100%);
-    background: linear-gradient(to right, #fe8464 0%, #fe6e9a 50%, #fe8464 100%);
+   background-color: #ffc107;
     background-size: 200%; }
     @media (max-width: 767px) {
       .subscribe-form button {
         position: relative;
         width: 100%;
         margin-top: 10px;
-        border-radius: 5px; } }
+        border-radius: 10px; } }
     @media only screen and (min-width: 576px) and (max-width: 767px) {
       .subscribe-form button {
         position: absolute;
         width: auto;
         margin-top: 0;
         border-radius: 0;
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px; } }
+         } }
     .subscribe-form button:hover {
       color: #fff;
       background-position: right center; }
