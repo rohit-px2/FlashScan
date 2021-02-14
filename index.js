@@ -1,7 +1,11 @@
-const app = require('express')()
+const express = require('express')
+const app = express()
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const config = require('./utils/config')
+const multer = require('multer')
+
+app.use(express.json())
 
 app.post("/image/:id", async (req, res) => {
   console.log(req)
