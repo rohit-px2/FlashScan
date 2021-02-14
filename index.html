@@ -1,44 +1,184 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>FlashScan</title>
-    <style>
-      body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+<!doctype html>
+<html class="no-js" lang="en">
 
-      #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
-      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
-      #input:focus { outline: none; }
-      #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
+<head>
+  <meta charset="utf-8">
 
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages > li { padding: 0.5rem 1rem; }
-      #messages > li:nth-child(odd) { background: #efefef; }
-    </style>
-  </head>
-  <body>
-    <img id="qrCode" src="" alt="QR Code" title="QR Code">
-    <ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-      let counter = 0
-      let socket = io();
-      socket.on('connect', () => {
-        console.log(socket.id)
-        let img = document.getElementById("qrCode");
-        img.src=`https://api.qrserver.com/v1/create-qr-code/?data=https://limitless-dawn-38943.herokuapp.com/${socket.id}&amp;size=100x100`
-      })
-      socket.on('news', (img) => {
-        fetch(img).then(res => res.blob()).then(blob => {
-          let link = document.createElement('a')
-          link.href = URL.createObjectURL(blob)
-          const extension = img.substring("data:image/".length, img.indexOf(";base64"))
-          link.download = `${counter++}.${extension}`
-          link.click()
-        })
-      })
-    </script>
-  </body>
+  <!--====== Title ======-->
+  <title>Basic - SaaS Landing Page</title>
+
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--====== Favicon Icon ======-->
+  <link rel="shortcut icon" href="/images/favicon.png">
+
+  <!--====== Animate CSS ======-->
+  <link rel="stylesheet" href="/css/animate.css">
+
+  <!--====== Line Icons CSS ======-->
+  <link rel="stylesheet" href="/css/LineIcons.2.0.css">
+
+  <!--====== Bootstrap CSS ======-->
+  <link rel="stylesheet" href="/css/bootstrap-4.5.0.min.css">
+
+  <!--====== Default CSS ======-->
+  <link rel="stylesheet" href="/css/default.css">
+
+  <!--====== Style CSS ======-->
+  <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+<!--[if IE]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+<![endif]-->
+
+
+<!--====== PRELOADER PART START ======-->
+
+<div class="preloader">
+  <div class="loader">
+    <div class="ytp-spinner">
+      <div class="ytp-spinner-container">
+        <div class="ytp-spinner-rotator">
+          <div class="ytp-spinner-left">
+            <div class="ytp-spinner-circle"></div>
+          </div>
+          <div class="ytp-spinner-right">
+            <div class="ytp-spinner-circle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--====== PRELOADER PART ENDS ======-->
+
+<!--====== HEADER PART START ======-->
+
+<header class="header-area">
+  <div class="navbar-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <nav class="navbar navbar-expand-lg">
+            <!--
+            <a class="navbar-brand" href="index.html">
+              <img href="/images/logo.svg" alt="Logo">
+            </a>
+            -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="toggler-icon"></span>
+              <span class="toggler-icon"></span>
+              <span class="toggler-icon"></span>
+            </button>
+
+
+
+
+          </nav> <!-- navbar -->
+        </div>
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </div> <!-- navbar area -->
+
+  <div id="home" class="header-hero bg_cover" style="background-image: url(images/banner-bg.svg)">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="header-hero-content text-center">
+
+            <h1 class="header-title wow fadeInUp" style="text-align: center;font-size: 50px;" data-wow-duration="1.3s" data-wow-delay="0.5s">imagePortal</h1>
+            <p class="text wow fadeInUp" style="text-align: center;font-size: 15px;" data-wow-duration="1.3s" data-wow-delay="0.8s">Lightning fast image transfers from your phone to your computer.</p>
+            <br>
+            <br>
+          </div> <!-- header hero content -->
+        </div>
+      </div> <!-- row -->
+
+      <div class="subscribe-area wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="subscribe-content mt-45">
+              <h2 class="title">Scan QR Code:</h2><br>
+              <p class="text">Open your mobile device and scan the QR Code. On IOS, simply use the camera app. On Android, use Chrome's scan feature above the keyboard beside the mic icon.</p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <img id="qrCode" src="" alt="QR Code" title="QR Code">
+            <script src="/socket.io/socket.io.js"></script>
+            <script>
+              let counter = 0
+              let socket = io();
+              socket.on('connect', () => {
+                console.log(socket.id)
+                let img = document.getElementById("qrCode");
+                img.src=`https://api.qrserver.com/v1/create-qr-code/?data=https://limitless-dawn-38943.herokuapp.com/${socket.id}&amp;size=100x100`
+              })
+              socket.on('news', (img) => {
+                fetch(img).then(res => res.blob()).then(blob => {
+                  let link = document.createElement('a')
+                  link.href = URL.createObjectURL(blob)
+                  const extension = img.substring("data:image/".length, img.indexOf(";base64"))
+                  link.download = `${counter++}.${extension}`
+                  link.click()
+                })
+              })
+            </script>
+          </div>
+        </div> <!-- row -->
+      </div> <!-- subscribe area -->
+
+
+
+
+
+    </div> <!-- container -->
+    <div id="particles-1" class="particles"></div>
+  </div> <!-- header hero -->
+</header>
+
+<!--====== HEADER PART ENDS ======-->
+
+
+
+
+
+
+
+<!--====== Jquery js ======-->
+<script src="/js/vendor/jquery-3.5.1-min.js"></script>
+<script src="/js/vendor/modernizr-3.7.1.min.js"></script>
+
+<!--====== Bootstrap js ======-->
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap-4.5.0.min.js"></script>
+
+<!--====== Plugins js ======-->
+<script href="/js/plugins.js"></script>
+
+<!--====== Counter Up js ======-->
+<script src="/js/waypoints.min.js"></script>
+<script src="/js/jquery.counterup.min.js"></script>
+
+
+
+<!--====== Scrolling Nav js ======-->
+<script src="/js/jquery.easing.min.js"></script>
+<script src="/js/scrolling-nav.js"></script>
+
+<!--====== wow js ======-->
+<script src="/js/wow.min.js"></script>
+
+<!--====== Particles js ======-->
+<script src="/js/particles.min.js"></script>
+
+<!--====== Main js ======-->
+<script src="/js/main.js"></script>
+
+</body>
+
 </html>
