@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>Upload</title>
+  </head>
+  <body>
+    <form id="uploadForm">
+      <input id="files" type="file" accept="image/x-png,image/jpeg" multiple>
+      <br>
+      <button type="submit">Submit</button>
+    </form>
+    <script>
+      import axios from 'axios';
+      let f = document.getElementById("uploadForm")
+      f.addEventListener("submit", (event) => {
+        event.preventDefault();
+      })
+    </script>
+  </body>
+</html>

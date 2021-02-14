@@ -9,6 +9,10 @@ app.get("/image/:id", async (req, res) => {
   res.send("Sent!")
 })
 
+app.get("/:id", async (req, res) => {
+  res.sendFile(__dirname + "/upload.html")
+})
+
 app.get('/', (_req, res) => {
   res.sendFile(__dirname + "/index.html")
 })
